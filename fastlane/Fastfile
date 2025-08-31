@@ -1,0 +1,75 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+  # === STEP 1: Certs/profiles ===
+  match(type: "appstore")
+
+  # === STEP 2: Get & bump version ===
+  new_version = get_version_number(
+    xcodeproj: "WebViewGold.xcodeproj",
+    target: "WebViewGold"
+  )
+  new_version_parts = new_version.split(".").map(&:to_i)
+  new_version_parts[-1] += 1
+  new_version = new_version_parts.join(".")
+
+  increment_version_number(
+    version_number: new_version,
+    xcodeproj: "WebViewGold.xcodeproj"
+  )
+
+  # Update OneSignal extension version
+  set_info_plist_value(
+    path: "/Users/redagrili/Desktop/XcodeSourceCode/OneSignalNotificationServiceExtension/Info.plist",
+    key: "CFBundleShortVersionString",
+    value: new_version
+  )
+
+  # === STEP 3: Build number ===
+  build_number = Time.now.strftime("%Y%m%d%H%M")
+
+  increment_build_number(
+    build_number: build_number,
+    xcodeproj: "WebViewGold.xcodeproj"
+  )
+
+  set_info_plist_value(
+    path: "/Users/redagrili/Desktop/XcodeSourceCode/OneSignalNotificationServiceExtension/Info.plist",
+    key: "CFBundleVersion",
+    value: build_number
+  )
+
+  # === STEP 4: Build & export ===
+  build_app(
+    workspace: "WebViewGold.xcworkspace",
+    scheme: "WebViewGold",
+    export_method: "app-store",
+    export_options: {
+      provisioningProfiles: {
+        "com.wplace.sokh" => "match AppStore com.wplace.sokh",
+        "com.wplace.sokh.OneSignalNotificationServiceExtension" => "match AppStore com.wplace.sokh"
+      }
+    }
+  )
+
+  # === STEP 5: Upload to TestFlight ===
+  upload_to_testflight
+end
+end
