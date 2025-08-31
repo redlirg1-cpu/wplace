@@ -83,4 +83,5 @@
       buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
+  <Shared>true</Shared>
 </Scheme>
