@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8171D2071F6B096F00AA7B99"
-               BuildableName = "Wplace.app"
+               BuildableName = "WebView.app"
                BlueprintName = "WebViewGold"
                ReferencedContainer = "container:WebViewGold.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8171D2071F6B096F00AA7B99"
-            BuildableName = "Wplace.app"
+            BuildableName = "WebView.app"
             BlueprintName = "WebViewGold"
             ReferencedContainer = "container:WebViewGold.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8171D2071F6B096F00AA7B99"
-            BuildableName = "Wplace.app"
+            BuildableName = "WebView.app"
             BlueprintName = "WebViewGold"
             ReferencedContainer = "container:WebViewGold.xcodeproj">
          </BuildableReference>
@@ -73,4 +73,6 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
-      rev
+      revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>
